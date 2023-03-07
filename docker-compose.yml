@@ -1,0 +1,18 @@
+# docker-compose.yml
+version: "3.4"
+services:
+  llvmada:
+    image: llvmada
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: ${UID}:${GID}
+    stdin_open: true
+    tty: true
+    environment:
+      - GNAT_LLVM_BRANCH=${GNAT_LLVM_BRANCH:-"lts-21"}
+      - GCC_BRANCH=${GNAT_LLVM_BRANCH:-"releases/gcc-12"}
+    volumes:
+      - type: bind
+        source: ./io
+        target: /io
